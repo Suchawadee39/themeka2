@@ -155,17 +155,29 @@ function showStatus() {
   const realdata = dataList;
   for (let index = 0; index < realdata.length; index++) {
     const element = realdata[index];
-    /*    console.log("logElement", element); */
+    /* console.log("logElement", element); */
+
     const testName = element.name;
     console.log("TestName", testName);
-    const estimate = element.orders;
+    const orders = element.orders;
     /*     console.log("testlogestimate", estimate); */
 
-    for (let index = 0; index < estimate.length; index++) {
-      const element = estimate[index];
-      /*   console.log("thisElement", element); */
-      const testTime = element.estimate_end_time;
+    for (let index = 0; index < orders.length; index++) {
+      const order = orders[index];
+      /* console.log("thisElement", element); */
+      const testTime = order.estimate_end_time;
       /*  console.log("TestTime", testTime); */
+      let imageStatus = null;
+      if (order.status == "waiting") {
+        imageStatus = "/images/Icon/In-the-kitchen.png";
+      }
+      /*  if (order.status == "orderplaced") {
+        imageStatus = "/images/Icon/order-placed.png";
+      }
+      if (order.status == "serving") {
+        imageStatus = "/images/Icon/serving.png";
+      } */
+
       x.innerHTML += `<div class="row ">
       <div class="col-5">
         <div class="status-table">
@@ -180,7 +192,7 @@ function showStatus() {
         </div>
       </div>
       <div class="col-2">
-          <img class="status-logo" src="${element.img}">
+          <img class="status-logo" src="${imageStatus}">
       </div>
     </div>`;
     }
