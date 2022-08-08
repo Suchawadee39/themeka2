@@ -117,9 +117,9 @@ let slideList = [
   },
 ];
 
-let getSlideList = null;
+let getSlideList = [];
 
-let menuData = null;
+let menuData = [];
 
 let monthNames = [
   "Jan.",
@@ -154,6 +154,10 @@ function showStatus() {
   const realdata = dataList;
   for (let index = 0; index < realdata.length; index++) {
     const element = realdata[index];
+
+    const estimate = element.orders;
+    console.log("testlogestimate", estimate);
+
     x.innerHTML += `<div class="row ">
     <div class="col-5">
       <div class="status-table">
@@ -180,31 +184,35 @@ setInterval(() => {
 
 function showSlider() {
   let x = document.getElementById("show-slide");
-  for (let index = 0; index < slideList.length; index++) {
-    const element = slideList[index];
+  console.log("Test1", getSlideList);
+  for (let index = 0; index < getSlideList.length; index++) {
+    const element = getSlideList[index];
+
+    const image = element.image_path;
+    const titleimg = element.description;
+    console.log("title123", titleimg);
+    console.log("logimage", image);
     if (index === 0) {
       x.innerHTML += `<div class="carousel-item active" data-bs-interval="30000">
-      <img class="img-slider" src="${element.image_path}">
+      <img class="img-slider" src="${image}">
       <div class="wrapper-content">
         <div class="carousel-caption d-none d-md-block">
-        <div class="menu-name">${element.menuname.toUpperCase()}</div>
+        <div class="menu-name">${titleimg}</div>
         </div>
       </div>
     </div>`;
     } else {
       x.innerHTML += `<div class="carousel-item" data-bs-interval="30000">
-      <img class="img-slider" src="${element.image_path}">
+      <img class="img-slider" src="${image}">
       <div class="wrapper-content">
         <div class="carousel-caption d-none d-md-block">
-        <div class="menu-name">${element.menuname.toUpperCase()}</div>
+        <div class="menu-name">${titleimg.toUpperCase()}</div>
         </div>
       </div>
     </div>`;
     }
   }
 }
-
-showSlider();
 
 function showClockRealTime() {
   let d = new Date();
@@ -236,20 +244,24 @@ async function getData() {
     }
   );
   const result = await response.json();
-  console.log(result);
+  console.log("result", result);
 
   const res1 = result.data[0];
   console.log("rest1", res1);
 
   dataList = res1.room_or_tables;
-  slideList = res1.slides;
-  console.log("datalist", dataList);
-  console.log("slide", slideList);
-  showStatus();
+
+  getSlideList = res1.slides;
+
+  console.log("datalist123", dataList);
+  console.log("slide", getSlideList);
+
   // for (let index = 0; index < res1.room_or_tables.length; index++) {
   //   const element = res1.room_or_tables[index];
   //   console.log(element);
   // }
+  showStatus();
+  showSlider();
 }
 
 getData();
