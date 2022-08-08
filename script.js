@@ -1,4 +1,4 @@
-const dataList = [
+let dataList = [
   {
     id: 1,
     table: "A01",
@@ -74,7 +74,7 @@ const dataList_2 = [
   },
 ];
 
-const slideList = [
+let slideList = [
   {
     id: 1,
     imgf: "./images/pic/example1.jpg",
@@ -117,6 +117,10 @@ const slideList = [
   },
 ];
 
+let getSlideList = null;
+
+let menuData = null;
+
 let monthNames = [
   "Jan.",
   "Feb.",
@@ -146,14 +150,15 @@ function showStatus() {
 
   let x = document.getElementById("show-status");
   x.innerHTML = "";
-  const realdata = showData == 1 ? dataList : dataList_2;
+  // const realdata = showData == 1 ? dataList : dataList_2;
+  const realdata = dataList;
   for (let index = 0; index < realdata.length; index++) {
     const element = realdata[index];
     x.innerHTML += `<div class="row ">
     <div class="col-5">
       <div class="status-table">
         <div class="name-status">โต๊ะ (Table)</div>
-        <div class="main-status">${element.table}</div>
+        <div class="main-status">${element.name}</div>
       </div>
     </div>
     <div class="col-5 ">
@@ -179,7 +184,7 @@ function showSlider() {
     const element = slideList[index];
     if (index === 0) {
       x.innerHTML += `<div class="carousel-item active" data-bs-interval="30000">
-      <img class="img-slider" src="${element.imgf}">
+      <img class="img-slider" src="${element.image_path}">
       <div class="wrapper-content">
         <div class="carousel-caption d-none d-md-block">
         <div class="menu-name">${element.menuname.toUpperCase()}</div>
@@ -188,7 +193,7 @@ function showSlider() {
     </div>`;
     } else {
       x.innerHTML += `<div class="carousel-item" data-bs-interval="30000">
-      <img class="img-slider" src="${element.imgf}">
+      <img class="img-slider" src="${element.image_path}">
       <div class="wrapper-content">
         <div class="carousel-caption d-none d-md-block">
         <div class="menu-name">${element.menuname.toUpperCase()}</div>
@@ -222,3 +227,29 @@ function showTextMessage() {
   document.getElementById("text-showmessage").innerHTML = textMessage;
 }
 showTextMessage();
+
+async function getData() {
+  const response = await fetch(
+    "http://13.250.6.185/fb-system/public/api/guest/restaurants",
+    {
+      method: "GET",
+    }
+  );
+  const result = await response.json();
+  console.log(result);
+
+  const res1 = result.data[0];
+  console.log("rest1", res1);
+
+  dataList = res1.room_or_tables;
+  slideList = res1.slides;
+  console.log("datalist", dataList);
+  console.log("slide", slideList);
+  showStatus();
+  // for (let index = 0; index < res1.room_or_tables.length; index++) {
+  //   const element = res1.room_or_tables[index];
+  //   console.log(element);
+  // }
+}
+
+getData();
