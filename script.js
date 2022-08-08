@@ -1,4 +1,4 @@
-let dataList = [
+/* let dataList = [
   {
     id: 1,
     table: "A01",
@@ -35,8 +35,8 @@ let dataList = [
     img: "./images/icon/order-placed.png",
   },
 ];
-
-const dataList_2 = [
+ */
+/* const dataList_2 = [
   {
     id: 6,
     table: "A06",
@@ -73,7 +73,7 @@ const dataList_2 = [
     img: "./images/icon/order-placed.png",
   },
 ];
-
+ */
 let slideList = [
   {
     id: 1,
@@ -117,6 +117,7 @@ let slideList = [
   },
 ];
 
+let dataList = [];
 let getSlideList = [];
 
 let menuData = [];
@@ -154,27 +155,35 @@ function showStatus() {
   const realdata = dataList;
   for (let index = 0; index < realdata.length; index++) {
     const element = realdata[index];
-
+    /*    console.log("logElement", element); */
+    const testName = element.name;
+    console.log("TestName", testName);
     const estimate = element.orders;
-    console.log("testlogestimate", estimate);
+    /*     console.log("testlogestimate", estimate); */
 
-    x.innerHTML += `<div class="row ">
-    <div class="col-5">
-      <div class="status-table">
-        <div class="name-status">โต๊ะ (Table)</div>
-        <div class="main-status">${element.name}</div>
+    for (let index = 0; index < estimate.length; index++) {
+      const element = estimate[index];
+      /*   console.log("thisElement", element); */
+      const testTime = element.estimate_end_time;
+      /*  console.log("TestTime", testTime); */
+      x.innerHTML += `<div class="row ">
+      <div class="col-5">
+        <div class="status-table">
+          <div class="name-status">โต๊ะ (Table)</div>
+          <div class="main-status">${testName}</div>
+        </div>
       </div>
-    </div>
-    <div class="col-5 ">
-      <div class="status-time">
-        <div class="name-status">เสิร์ฟ (Serving time)</div>
-        <div class="main-status">${element.time}</div>
+      <div class="col-5 ">
+        <div class="status-time">
+          <div class="name-status">เสิร์ฟ (Serving time)</div>
+          <div class="main-status">${testTime}</div>
+        </div>
       </div>
-    </div>
-    <div class="col-2">
-        <img class="status-logo" src="${element.img}">
-    </div>
-  </div>`;
+      <div class="col-2">
+          <img class="status-logo" src="${element.img}">
+      </div>
+    </div>`;
+    }
   }
 }
 showStatus();
@@ -190,8 +199,7 @@ function showSlider() {
 
     const image = element.image_path;
     const titleimg = element.description;
-    console.log("title123", titleimg);
-    console.log("logimage", image);
+
     if (index === 0) {
       x.innerHTML += `<div class="carousel-item active" data-bs-interval="30000">
       <img class="img-slider" src="${image}">
@@ -247,15 +255,15 @@ async function getData() {
   console.log("result", result);
 
   const res1 = result.data[0];
-  console.log("rest1", res1);
+  /*   console.log("rest1", res1); */
 
   dataList = res1.room_or_tables;
 
   getSlideList = res1.slides;
 
-  console.log("datalist123", dataList);
+  /*   console.log("datalist123", dataList);
   console.log("slide", getSlideList);
-
+ */
   // for (let index = 0; index < res1.room_or_tables.length; index++) {
   //   const element = res1.room_or_tables[index];
   //   console.log(element);
