@@ -1,4 +1,3 @@
-
 const perChunk = 5;
 
 let slideList = [
@@ -89,14 +88,14 @@ function showStatus() {
     const tableName = element.name;
 
     const orders = element.orders;
-
+    console.log("orders", orders);
     for (let index = 0; index < orders.length; index++) {
       const order = orders[index];
 
       const testTime = order.estimate_end_time;
 
       let imageStatus = null;
-      if (order.status == "Waiting") {
+      if (order.status == "In the kitchen") {
         imageStatus = "/images/Icon/in-the-kitchen.png";
       }
       if (order.status == "Order Place") {
@@ -137,7 +136,7 @@ function tableToChunk(arr) {
 
 function showSlider() {
   let x = document.getElementById("show-slide");
-  
+
   for (let index = 0; index < getSlideList.length; index++) {
     const element = getSlideList[index];
 
@@ -196,16 +195,14 @@ async function getData() {
   );
   const result = await response.json();
 
-
   const res1 = result.data[0];
 
   dataList = res1.room_or_tables;
-
+  console.log("datalist_rest1", dataList);
   textMessage = res1.remark;
 
   getSlideList = res1.slides;
 
- 
   showStatus();
   showSlider();
   showTextMessage();
@@ -216,12 +213,11 @@ function getPage() {
     get: (searchParams, prop) => searchParams.get(prop),
   });
   // Get the value of "some_key" in eg "https://example.com/?some_key=some_value"
-  return params.page; 
+  return params.page;
 }
 
 /////////////////////////////////////
 getData();
-
 
 setInterval(() => {
   window.location.href = "index.html?page=" + (page + 1);
